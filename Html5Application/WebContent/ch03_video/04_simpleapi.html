@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML5의 Video</title>
+</head>
+<body>
+    <video id="media" controls width="640" height="360">
+        <source src="../video/big_buck_bunny.webm">
+        <source src="../video/big_buck_bunny.mp4">
+    </video>
+    <br>
+    <button id="btnPlay">재생</button>
+    <button id="btnPause">일시정지</button>
+    <span id="info"></span>
+</body>
+<script>
+    var media = document.querySelector("#media");
+    var info = document.querySelector("#info");
+    document.querySelector("#btnPlay").addEventListener("click", function(){
+        media.play();
+    });
+    document.querySelector("#btnPause").addEventListener("click", function(){
+        media.pause();
+    });
+    media.addEventListener("timeupdate", function(){
+        info.innerHTML = "상태:"+media.currentTime+"/"+media.duration;
+    });
+</script>
+</html>

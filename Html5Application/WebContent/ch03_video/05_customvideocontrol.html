@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML5의 Video</title>
+<style>
+#player {
+	width: 640px;
+	margin: 20px auto;
+	padding: 5px;
+	background: #999999;
+}
+
+#nav {
+	margin: 5px 0px;
+	display: none;
+}
+
+#mStatus {
+	height: 20px;
+	width: 580px;
+}
+
+#btnPlay {
+	height: 20px;
+	width: 60px;
+}
+</style>
+</head>
+<body>
+	<section id="player">
+		<video id="media" width="640" height="360">
+			<source src="../video/big_buck_bunny.webm">
+			<source src="../video/big_buck_bunny.mp4">
+		</video>
+		<nav id="nav">
+			<button id="btnPlay">play</button>
+			<meter id="mStatus" min="0"></meter>
+		</nav>
+	</section>
+</body>
+<script>
+	var player = document.querySelector("#player");
+	var nav = document.querySelector("#nav");
+	player.addEventListener("mouseover", function() {
+		nav.style.display = "flex";
+	});
+
+	player.addEventListener("mouseout", function() {
+		nav.style.display = "none";
+	});
+	
+	var media = document.querySelector("#media");
+	media.addEventListener("progress", function() {
+		if (media.duration) {
+			mStatus.max = parseInt(media.duration);
+		}
+	});
+	media.addEventListener("loadstart", function(){
+		console.log("load starg"+media.duration);
+		for(var i in media){
+			console.log(i+" : "+media[i]);
+		}
+		if (media.duration) {
+			console.log(media.duration);
+		}
+	});
+	
+	var intervalId;
+	var btnPlay = document.querySelector("#btnPlay");
+
+	btnPlay.addEventListener("click", function() {
+		if (media.paused || media.ended) {
+			media.play();
+			this.innerHTML = "Pause";
+			intervalId = setInterval(status, 1000);			
+		}else{
+			media.pause();
+			this.innerHTML = "play";
+			clearInterval(intervalId);
+		}
+	});
+
+	function status() {
+		if (!media.ended) {
+			mStatus.value = parseInt(media.currentTime);
+		} else {
+			mStatus.value = 0;
+			clearInterval(intervalId);
+		}
+	}
+	
+	var mStatus = document.querySelector("#mStatus");
+	mStatus.addEventListener("click", function(e) {
+		var clicked = e.pageX - this.offsetLeft;
+		var newTime = clicked * media.duration / this.scrollWidth;
+		media.currentTime = newTime;
+		this.value = parseInt(newTime);
+	});
+</script>
+</html>
