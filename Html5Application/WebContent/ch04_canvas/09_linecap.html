@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>다양한 line의 속성</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="150" height="150">
+        당신의 브라우저는 canvas를 지원하지 않습니다.
+    </canvas>
+</body>
+<script>
+	var caps = [ "buff", "round", "square" ];
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function drawLine() {
+		ctx.fillStyle = "rgb(255, 165,0)";
+		ctx.fillRect(20, 20, 110, 110);
+
+		ctx.lineWidth = 20;
+		for (var i = 0; i < 3; i++) {
+			ctx.beginPath();
+			ctx.lineCap = caps[i];
+			ctx.moveTo(20, 50 + 30 * i);
+			ctx.lineTo(130, 50 + 30 * i);
+			ctx.stroke();
+		}
+	}
+	drawLine();
+</script>
+</html>

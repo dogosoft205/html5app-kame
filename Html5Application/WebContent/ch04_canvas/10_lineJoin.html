@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>다양한 line의 속성</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="150" height="150">
+        당신의 브라우저는 canvas를 지원하지 않습니다.
+    </canvas>
+</body>
+<script>
+	var join = [ "round", "bevel", "miter" ];
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function drawLine() {
+		ctx.lineWidth = 20;
+		for (var i = 0; i < 3; i++) {
+			ctx.beginPath();
+			ctx.lineJoin = join[i];
+			ctx.moveTo(15+30*i, 10);
+			ctx.lineTo(15+30*i, 135-30*i);
+			ctx.lineTo(140, 135-30*i)
+			ctx.stroke();
+		}
+	}
+	drawLine();
+</script>
+</html>

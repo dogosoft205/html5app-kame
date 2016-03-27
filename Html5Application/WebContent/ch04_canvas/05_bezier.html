@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Path 활용</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function drawSimple() {
+		ctx.beginPath();
+		ctx.strokeStyle = "rgb(0,255,0)";
+		ctx.moveTo(20, 130);
+		ctx.lineTo(100, 10);
+		ctx.lineTo(180, 130);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.strokeStyle = "rgb(255, 0, 0)";
+		ctx.moveTo(20, 130);
+		ctx.quadraticCurveTo(100, 25, 180, 130);
+		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.strokeStyle = "rgb(0, 255, 0)";
+		ctx.moveTo(200, 130);
+		ctx.lineTo(250, 10);
+		ctx.lineTo(300, 10);
+		ctx.lineTo(400, 130);
+		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.strokeStyle = "rgb(255, 0, 0)";
+
+		ctx.moveTo(200, 130);
+		ctx.bezierCurveTo(250,10,300,10,400,130);
+		ctx.stroke();
+	}
+
+	drawSimple();
+</script>
+</html>

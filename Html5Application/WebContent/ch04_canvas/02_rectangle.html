@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>canvas에서 사각형 표현</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="150" height="150">
+        당신의 브라우저는 canvas를 지원하지 않습니다.
+    </canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function drawRect(){
+		ctx.fillRect(25, 25, 100, 100);
+		ctx.clearRect(45, 45, 60, 60);
+		ctx.strokeRect(50, 50, 50, 50);		
+	}
+	drawRect();
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Path 활용</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function drawArc() {
+		ctx.beginPath();
+		ctx.moveTo(75, 75);
+		ctx.lineTo(125, 75);
+		ctx.arc(75, 75, 50, 0, Math.PI / 180 * 90, true);
+		ctx.closePath();
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.moveTo(85, 85);
+		ctx.lineTo(135, 85);
+		ctx.arc(85, 85, 50, 0, Math.PI / 180 * 90, false);
+		ctx.fill();
+
+	}
+
+	drawArc();
+</script>
+</html>

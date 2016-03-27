@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Path 활용</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function speechBaloon() {
+	    ctx.beginPath();
+	    ctx.moveTo(75,25);
+	    ctx.quadraticCurveTo(25,25,25,62.5);
+	    ctx.quadraticCurveTo(25,100,50,100);
+	    ctx.quadraticCurveTo(50,120,30,125);
+	    ctx.quadraticCurveTo(60,120,65,100);
+	    ctx.quadraticCurveTo(125,100,125,62.5);
+	    ctx.quadraticCurveTo(125,25,75,25);
+	    ctx.stroke();
+	}
+	
+	function heart(){
+	    ctx.beginPath();
+	    ctx.moveTo(275,40);
+	    ctx.bezierCurveTo(275,37,270,25,250,25);
+	    ctx.bezierCurveTo(220,25,220,62.5,220,62.5);
+	    ctx.bezierCurveTo(220,80,240,102,275,120);
+	    ctx.bezierCurveTo(310,102,330,80,330,62.5);
+	    ctx.bezierCurveTo(330,62.5,330,25,300,25);
+	    ctx.bezierCurveTo(285,25,275,37,275,40);
+	    ctx.fill();
+	}
+
+	speechBaloon();
+	heart();
+</script>
+</html>
