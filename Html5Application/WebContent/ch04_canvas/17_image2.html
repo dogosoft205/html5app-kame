@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+body{
+	display:flex;
+	align-items:center;
+}
+#source{
+	width: 320px;
+	height: 213px;
+}
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas1" width="320" height="213"></canvas>
+	<div>,</div>
+	<canvas id="canvas2" width="320" height="213"></canvas>
+</body>
+<script>
+	var canvas1 = document.querySelector("#canvas1");
+	var ctx1 = canvas1.getContext("2d");
+	var img1 = new Image();
+	img1.src = "../images/Canvas_sample.png";
+	img1.addEventListener("load", function(){
+		ctx1.drawImage(this, 0, 0);
+	});
+	var canvas2 = document.querySelector("#canvas2");
+	var ctx2 = canvas2.getContext("2d");
+	var img2 = new Image();
+	img2.src = "https://www.w3.org/html/logo/img/mark-word-icon.png";
+	img2.addEventListener("load", function(){
+		ctx2.drawImage(this, 0, 0);
+	});
+</script>
+</html>

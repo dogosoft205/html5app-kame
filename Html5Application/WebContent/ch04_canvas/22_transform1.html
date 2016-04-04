@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+body {
+	display: flex;
+	align-items: center;
+}
+
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+	function draw() {
+		ctx.font ="2em 고딕";
+		ctx.fillText("Trans", 10, 50);
+		ctx.save();
+		
+		ctx.translate(0, 80);
+		ctx.fillText("원점이동", 10, 50);
+		
+		ctx.restore();
+		ctx.save();
+		ctx.translate(200, 0);
+		ctx.rotate(Math.PI /180 * 15);
+		ctx.fillText("회전", 10, 50);
+		
+		ctx.restore();
+		ctx.translate(200, 80);
+		ctx.scale(2, 1);
+		ctx.fillText("확대", 10, 50);
+	}
+	draw();
+</script>
+</html>

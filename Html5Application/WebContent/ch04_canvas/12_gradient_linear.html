@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gradient 활용</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+
+	function draw() {
+		var lingrad = ctx.createLinearGradient(0, 0, 450, 0);
+		lingrad.addColorStop(0, 'rgb(255,0,0)');
+		lingrad.addColorStop(0.3, 'rgb(0, 255,0)');
+		lingrad.addColorStop(0.7, 'rgb(0,0,255)');
+		lingrad.addColorStop(1, 'rgb(255,255,255)');
+		ctx.fillStyle = lingrad;
+		ctx.fillRect(00, 0, 450, 150);
+	}
+	draw();
+</script>
+</html>

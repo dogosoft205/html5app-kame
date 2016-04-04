@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+body {
+	
+}
+
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="150" height="150"></canvas>
+	<br>
+	<select id="compositeValue">
+		<option>source-over
+		<option>source-in
+		<option>source-out
+		<option>source-atop
+		<option>destination-over
+		<option>destination-in
+		<option>destination-out
+		<option>destination-atop
+		<option>xor
+		<option>copy
+		<option>lighter
+	</select>
+	<button id="btnDraw">그리기</button>
+</body>
+<script>
+	function draw() {
+		var canvas = document.querySelector("#canvas");
+		var ctx = canvas.getContext("2d");
+		var type =  document.querySelector("#compositeValue").value;
+		ctx.clearRect(0, 0, 150, 150);
+		ctx.globalCompositeOperation = "source-over";
+
+		ctx.fillStyle = "rgb(0, 0, 255)";
+		ctx.fillRect(0, 0, 150, 75);
+		
+		ctx.globalCompositeOperation =type;
+		ctx.fillStyle = "rgb(255, 0, 0)";
+		ctx.fillRect(25, 25, 100, 100);
+	}
+
+	document.querySelector("#btnDraw").addEventListener("click", draw);
+</script>
+</html>

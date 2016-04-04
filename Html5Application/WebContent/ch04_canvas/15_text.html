@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>문자</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="450" height="150"></canvas>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+
+	function draw() {
+		ctx.beginPath();
+		ctx.moveTo(0, 50);
+		ctx.lineTo(450, 50);
+		ctx.stroke();
+		ctx.font = "3em Serif";
+		ctx.fillText("Html5 Application", 10, 50);
+		
+		ctx.moveTo(0, 120);
+		ctx.lineTo(450, 120);
+		ctx.textBaseline = "middle";
+		ctx.stroke();
+		ctx.font = "3em 맑은 고딕";
+		ctx.strokeText("Html5 Application", 10, 120);
+	}
+	draw();
+</script>
+</html>

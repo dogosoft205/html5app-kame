@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+#source {
+	width: 320px;
+	height: 213px;
+}
+
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="320" height="213"></canvas>
+	<div>
+		<input type="text" id="colorPicker">
+		<button id="grayScale">회색조</button>
+		<button id="invert">색반전</button>
+	</div>
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var bGrayScale = document.querySelector("#grayScale");
+	var bInvert = document.querySelector("#invert");
+	var colorPicker = document.querySelector("#colorPicker");
+	
+	var ctx = canvas.getContext("2d");
+	var img = new Image();
+	img.src = "../images/Canvas_sample.png";
+	img.addEventListener("load", function() {
+		ctx.drawImage(this, 0, 0);
+	});
+
+	canvas.addEventListener("mousemove", function(e) {
+		var imageData = ctx.getImageData(e.layerX, e.layerY, 1, 1);
+		var data = imageData.data;
+		
+		colorPicker.value = data;
+		var r = data[0];
+		var g = data[1];
+		var b = data[2];
+		var a = data[3];
+		colorPicker.style.background = "rgba(" + r + "," + g + ", " + b + ","
+				+ a + ")";
+	});
+
+	bGrayScale.addEventListener("click", function() {
+		var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		var data = imageData.data;
+		for (var i = 0; i < data.length; i += 4) {
+			var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+			data[i] = avg;
+			data[i + 1] = avg;
+			data[i + 2] = avg;
+		}
+		ctx.putImageData(imageData, 0, 0);
+	});
+
+	bInvert.addEventListener("click", function() {
+		var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		for (var i = 0; i < imageData.data.length; i++) {
+			if (i % 4 == 3) {
+				continue;
+			} else {
+				imageData.data[i] = 255 - imageData.data[i];
+			}
+		}
+		ctx.putImageData(imageData, 0, 0);
+	});
+</script>
+</html>

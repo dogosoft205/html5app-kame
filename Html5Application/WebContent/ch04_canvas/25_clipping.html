@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+#canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="150" height="150"></canvas>
+
+</body>
+<script>
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+
+	function draw() {
+		ctx.beginPath();
+		ctx.arc(75, 75, 60, Math.PI * 2, false);
+		ctx.clip();
+		
+		for (var i = 0; i < 100; i++) {
+			ctx.beginPath();
+			var x = Math.random() * 150;
+			var y = Math.random() * 150;
+			var r = Math.random() * 10;
+			ctx.arc(x, y, r, Math.PI * 2, false);
+			ctx.fill();
+		}
+	}
+	draw();
+</script>
+</html>

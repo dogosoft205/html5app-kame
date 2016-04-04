@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지</title>
+<style>
+body {
+	display: flex;
+	align-items: center;
+}
+
+canvas {
+	border: solid blue thin;
+}
+</style>
+</head>
+<body>
+	<video id="video" width="250" height="150"  controls="controls">
+		<source src="../video/big_buck_bunny.ogv">
+	</video>
+	<div>>></div>
+	<canvas id="canvas" width="250" height="150"></canvas>
+</body>
+<script>
+	var video = document.querySelector("#video");
+	var canvas = document.querySelector("#canvas");
+	var ctx = canvas.getContext("2d");
+
+	video.addEventListener("click", function(){
+		ctx.drawImage(video, 0, 0, this.width, this.height);
+	});
+</script>
+</html>
