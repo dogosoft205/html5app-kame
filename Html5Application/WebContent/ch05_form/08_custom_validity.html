@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>form API</title>
+</head>
+<body>
+	<form id="myform" action="#">
+		<label for="pass1">비밀번호</label>
+		<input type="password" id="pass1" required>
+		<label for="pass2">비밀번호 확인</label>
+		<input type="password" id="pass2" required>
+		<input type="submit">
+	</form>
+</body>
+<script>
+	var pass1 = document.querySelector("#pass1");
+	var pass2 = document.querySelector("#pass2");
+	
+	pass2.addEventListener("input", function(){
+		if(pass1.value!=this.value){
+			this.setCustomValidity("비밀 번호가 일치하지 않습니다.");
+			this.style.background="rgba(255, 0, 0, 0.5)";
+		}else{
+			this.setCustomValidity("");
+			this.style.background="rgba(0, 0, 0, 0)";
+		}
+	});
+</script>
+</html>

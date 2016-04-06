@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>form API</title>
+<style>
+#msg {
+	width: 200px;
+	height: 50px;
+	position: absolute;
+	display: none;
+	background: rgb(250, 195, 97);
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<form action="#" id="info">
+		<label for="name">이름</label>
+		<input type="text" name="name" id="name" pattern="[가-힣]{2,5}">
+		<label for="email">email</label>
+		<input type="email" name="myemail" id="myemail">
+		<input type="button" id="send" value="전송">
+	</form>
+	<div id="msg"></div>
+</body>
+<script>
+	var validationMsgForm = document.querySelector("#msg");
+	var form = document.querySelector("#info");
+	var sendB = document.querySelector("#send");
+	sendB.addEventListener("click", function() {
+		var isValid = form.checkValidity();
+		if (isValid) {
+			form.submit();
+		}
+	});
+	form.addEventListener("invalid", function(e) {
+		var src = e.target;
+		var msg;
+		if (src.type == "text" && src.validity.patternMismatch) {
+			msg = "양식을 확인하세요. 한글 2~5자 입력";
+		} else if (src.type == "text" && src.validity.patternMismatch) {
+			msg = "양식을 확인하세요. 한글 2~5자 입력";
+		}
+		showValidationMessage(msg, src);
+	}, true);
+	
+	form.addEventListener("input", function(e){
+		console.log(target.validity.valid);
+		if(target.validity.valid){
+			target.style.background="rgba(0,0,0,0)";
+		}else{
+			target.style.background="rgba(255,0,0,0.5)";
+		}
+	});
+
+	function showValidationMessage(msg, src) {
+		validationMsgForm.innerHTML = msg;
+		validationMsgForm.style.display = "block";
+		validationMsgForm.style.left = src.offsetLeft + "px";
+		validationMsgForm.style.top = src.offsetTop + src.offsetHeight + "px";
+
+		window.setTimeout(function() {
+			validationMsgForm.style.display = "none";
+		}, 3 * 1000);
+	}
+</script>
+</html>
