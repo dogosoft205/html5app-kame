@@ -37,16 +37,22 @@
 	form.addEventListener("invalid", function(e) {
 		var src = e.target;
 		var msg;
+		for(var i in src.validity){
+			console.log(i+" : "+src.validity[i]);
+		}
 		if (src.type == "text" && src.validity.patternMismatch) {
 			msg = "양식을 확인하세요. 한글 2~5자 입력";
-		} else if (src.type == "text" && src.validity.patternMismatch) {
-			msg = "양식을 확인하세요. 한글 2~5자 입력";
+		} else if (src.type == "email" && src.validity.typeMismatch) {
+			msg = "양식을 확인하세요. abc@def.net";
+		} else{
+			msg = src.validationMessage;
 		}
+		console.log(src.type+" : "+msg);
 		showValidationMessage(msg, src);
 	}, true);
 	
 	form.addEventListener("input", function(e){
-		console.log(target.validity.valid);
+		var target = e.target;
 		if(target.validity.valid){
 			target.style.background="rgba(0,0,0,0)";
 		}else{

@@ -12,12 +12,19 @@
 	background: rgb(250, 195, 97);
 	padding: 10px;
 }
+
+input:invalid {
+	background: rgba(255, 0, 0, 0.5);
+}
+
 </style>
 </head>
 <body>
 	<form action="#" id="info">
 		<label for="name">이름</label>
 		<input type="text" name="name" id="name" pattern="[가-힣]{2,5}">
+		<label for="email">email</label>
+		<input type="email" name="myemail" id="myemail">
 		<input type="button" id="send" value="전송">
 	</form>
 	<div id="msg"></div>
@@ -35,11 +42,10 @@
 	form.addEventListener("invalid", function(e) {
 		var src = e.target;
 		var msg;
-
 		if (src.type == "text" && src.validity.patternMismatch) {
 			msg = "양식을 확인하세요. 한글 2~5자 입력";
-		} else {
-			msg = src.validationMessage;
+		} else if (src.type == "text" && src.validity.patternMismatch) {
+			msg = "양식을 확인하세요. 한글 2~5자 입력";
 		}
 		showValidationMessage(msg, src);
 	}, true);

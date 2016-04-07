@@ -32,6 +32,8 @@
 		
 		if (src.type == "email" && src.validity.typeMismatch) {
 			msg = "이메일의 양식이 일치하지 않습니다. abc@def.com";
+		}else{
+			msg = src.validationMessage;
 		}
 		showValidationMessage(msg, src);
 	}, true);
