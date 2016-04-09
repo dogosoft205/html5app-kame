@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>drag &amp; drop</title>
+<style>
+#myMenu {
+	display: flex;
+}
+
+#total {
+	display: block;
+	border: 1px solid blue;
+	margin: 20px;
+}
+
+.item {
+	border: 1px solid blue;
+	width: 100px;
+	height: 100px;
+}
+</style>
+
+</head>
+<body>
+	<div>
+		<h3>준비된 요리 목록</h3>
+		<div id="total">
+			<img src="../images/banana.png" class="menuItem" id="banana" data-type="dessert">
+			<img src="../images/beer.png" class="menuItem" id="beer" data-type="drink">
+			<img src="../images/cherry.png" class="menuItem" id="cherry" data-type="dessert">
+			<img src="../images/coffee.png" class="menuItem" id="coffee" data-type="drink">
+			<img src="../images/juice.png" class="menuItem" id="juice" data-type="drink">
+			<img src="../images/noodle.png" class="menuItem" id="noodle" data-type="meal">
+			<img src="../images/orange.png" class="menuItem" id="orange" data-type="dessert">
+			<img src="../images/rice.png" class="menuItem" id="rice" data-type="meal">
+			<img src="../images/bread.png" class="menuItem" id="bread" data-type="meal">
+		</div>
+	</div>
+
+	<div id="myMenu">
+		<canvas id="dish" class="dropTarget" width="240" height="240" data-type="meal"></canvas>
+	</div>
+</body>
+<script>
+	var lis = document.querySelectorAll(".menuItem");
+	var total = document.querySelector("#total");
+	var dish = document.querySelector("#dish");
+	var ctx = dish.getContext("2d");
+
+	function drawDish() {
+		var dishImg = new Image();
+		dishImg.src = '../images/dish.png';
+		dishImg.addEventListener("load", function() {
+			ctx.drawImage(this, 0, 0);
+		});
+	}
+	drawDish();
+
+	for (var i = 0; i < lis.length; i++) {
+		lis[i].addEventListener("dragstart",
+				function(e) {
+					var dragSourceObj = {
+						"type" : e.target.dataset.type,
+						"id" : e.target.id,
+						"soffsetX" : e.offsetX,
+						"soffsetY" : e.offsetY
+					};
+					e.dataTransfer.setData("dragSource", JSON.stringify(dragSourceObj));
+
+					e.dataTransfer.effectAllowed = "move";
+				});
+	}
+
+	dish.addEventListener("dragenter", function(e) {
+		this.style.background = "rgba(0, 255, 0, 0.5)";
+	});
+	dish.addEventListener("dragleave", function() {
+		this.style.background = "rgba(0, 0, 0, 0)";
+	});
+	dish.addEventListener("dragover", function(e) {
+		e.preventDefault();
+		e.dataTransfer.dropEffect = "move";
+	});
+	dish.addEventListener("drop", function(e) {
+		e.preventDefault();
+		var dragSrcObj = JSON.parse(e.dataTransfer.getData("dragSource"));
+		var id = dragSrcObj.id;
+		var srctype = dragSrcObj.type;
+		var thistype = this.dataset.type;
+		if (!id) {
+			alert("이 요소는 드롭할 수 없습니다.");
+		} else {
+			if (!thistype || thistype == srctype) {
+				var x = e.offsetX - dragSrcObj.soffsetX;
+				var y = e.offsetY - dragSrcObj.soffsetY;
+				ctx.drawImage(document.getElementById(id), x, y);
+			} else {
+				alert(thistype + "에는 " + srctype + "을 담을 수 없습니다.");
+			}
+		}
+		this.style.background = "rgba(0, 0, 0, 0)";
+	});
+</script>
+</html>
+

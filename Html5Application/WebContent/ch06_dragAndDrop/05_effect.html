@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>drag &amp; drop</title>
+<style>
+#myMenu {
+	display: flex;
+}
+
+.dropTarget {
+	display: block;
+	border: 1px solid blue;
+	margin: 20px;
+}
+
+.item {
+	border: 1px solid blue;
+	width: 100px;
+	height: 100px;
+}
+</style>
+
+</head>
+<body>
+	<div>
+		<h3>준비된 요리 목록</h3>
+		<div>
+			<span id="cnt">9</span>개의 음식이 준비되어있습니다.
+		</div>
+		<div class="dropTarget" id="total">
+			<img src="../images/banana.png" class="menuItem" id="banana" data-type="dessert">
+			<img src="../images/beer.png" class="menuItem" id="beer" data-type="drink">
+			<img src="../images/cherry.png" class="menuItem" id="cherry" data-type="dessert">
+			<img src="../images/coffee.png" class="menuItem" id="coffee" data-type="drink">
+			<img src="../images/juice.png" class="menuItem" id="juice" data-type="drink">
+			<img src="../images/noodle.png" class="menuItem" id="noodle" data-type="meal">
+			<img src="../images/orange.png" class="menuItem" id="orange" data-type="dessert">
+			<img src="../images/rice.png" class="menuItem" id="rice" data-type="meal">
+			<img src="../images/bread.png" class="menuItem" id="bread" data-type="meal">
+		</div>
+		밥먹다 JavaScript가 궁금하다면 : <a href="https://developer.mozilla.org" id="mdn">MDN</a>
+	</div>
+
+	<div id="myMenu">
+		<div>
+			<h3>음료</h3>
+			<div class="dropTarget item" data-type="drink"></div>
+		</div>
+		<div>
+			<h3>식사</h3>
+			<div class="dropTarget item" data-type="meal"></div>
+		</div>
+		<div>
+			<h3>후식</h3>
+			<div class="dropTarget item" data-type="dessert"></div>
+		</div>
+	</div>
+</body>
+<script>
+	var lis = document.querySelectorAll(".menuItem");
+	var targets = document.querySelectorAll(".dropTarget");
+	var total = document.querySelector("#total");
+	var cnt = document.querySelector("#cnt");
+	for (var i = 0; i < lis.length; i++) {
+		lis[i].addEventListener("dragstart", function(e) {
+			e.dataTransfer.setData("text/plain", e.target.dataset.type);
+			e.dataTransfer.setData("id", e.target.id);
+
+			e.dataTransfer.effectAllowed = "copyMove";
+
+		});
+		lis[i].addEventListener("drag", function() {
+			//console.log("drag  event");
+		});
+		lis[i].addEventListener("dragend", function() {
+			cnt.innerHTML = total.children.length;
+		});
+	}
+
+	for (var i = 0; i < targets.length; i++) {
+		targets[i].addEventListener("dragenter", function(e) {
+			this.style.background = "rgba(0, 255, 0, 0.5)";
+		});
+		targets[i].addEventListener("dragleave", function() {
+			this.style.background = "rgba(0, 0, 0, 0)";
+		});
+		targets[i].addEventListener("dragover", function(e) {
+			e.preventDefault();
+			switch (e.target.dataset.type) {
+			case "drink":
+				e.dataTransfer.dropEffect = "copy";
+				break;
+			case "meal":
+				e.dataTransfer.dropEffect = "copy";
+				break;
+			case "dessert":
+				e.dataTransfer.dropEffect = "move";
+			}
+		});
+		targets[i].addEventListener("drop", function(e) {
+			e.preventDefault();
+			var id = e.dataTransfer.getData("id");
+			var type = e.dataTransfer.getData("text/plain");
+			this.appendChild(document.querySelector("#" + id));
+			this.style.background="rgba(0, 0, 0, 0)";
+		});
+	}
+</script>
+</html>
+

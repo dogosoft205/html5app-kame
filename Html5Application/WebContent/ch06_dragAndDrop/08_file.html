@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#main {
+	display: flex;
+	align-items: flex-start;
+}
+
+#fileInfo {
+	margin-left: 20px;
+}
+</style>
+</head>
+<body>
+	<p>분석하고 싶은 파일을 아래 이미지에 드롭하세요.</p>
+	<div id="main">
+		<img src="../images/analysis.png" id="analysis">
+		<div id="fileInfo"></div>
+	</div>
+</body>
+<script>
+	var fileInfo = document.getElementById("fileInfo");
+	var dropDestination = document.getElementById("analysis");
+
+	dropDestination.addEventListener("dragover", function(e) {
+		e.preventDefault();
+		this.style.background = "rgba(0, 0, 255, 0.5)";
+	});
+	dropDestination.addEventListener("dragleave", function() {
+		this.style.background = "rgba(0,0,0,0)";
+	});
+	dropDestination.addEventListener("drop", function(e) {
+		e.preventDefault();
+		var files = e.dataTransfer.files;
+		var html = "총 파일 개수 : " + files.length;
+		for (var i = 0; i < files.length; i++) {
+			html += "<p>파일 번호 : " + i + "<p><ul>";
+			for ( var key in files[i]) {
+				html += "<li>" + key + " : " + files[i][key];
+			}
+			html += "</ul>"
+		}
+		fileInfo.innerHTML = html;
+		this.style.background = "rgba(0,0,0,0)";
+	});
+</script>
+</html>
