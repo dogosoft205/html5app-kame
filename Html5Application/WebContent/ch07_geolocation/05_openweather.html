@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Geolocation API - LBS - openweathermap</title>
+<style>
+[type="number"] {
+	width: 80px;
+	margin-bottom: 10px;
+}
+
+tr:nth-child(2n) {
+	background: rgba(0, 255, 0, 0.2);
+}
+
+tr:nth-child(2n+1) {
+	background: rgba(0, 0, 255, 0.2);
+}
+
+.refresh {
+	width: 100px;
+}
+
+td:nth-child(2n+1) {
+	width: 100px;
+}
+
+#location {
+	display: inline;
+}
+</style>
+</head>
+<body>
+	<label for="timeout">타임아웃(초)</label>
+	<input type="number" min="0" id="timeout" value="2">
+	<label for="maximumAge">최대유효기간(초)</label>
+	<input type="number" min="0" id="maximumAge" value="0">
+	<input type="checkbox" id="enableHighAccuracy">
+	<label for="enableHighAccuracy">높은 정확도</label>
+	<button id="getLocation">현재 나의 위치</button>
+	<hr>
+	<table>
+		<tr>
+			<td>위도(°)</td>
+			<td><input type="text" id="latitude" class="refresh"></td>
+			<td>경도(°)</td>
+			<td><input type="text" id="longitude" class="refresh"></td>
+			<td>오차(m)</td>
+			<td><input type="text" id="accuracy" class="refresh"></td>
+		</tr>
+		<tr>
+			<td>에러메시지</td>
+			<td colspan="5" id="errorMessage" class="refresh"></td>
+		</tr>
+	</table>
+	<div>
+		<h2 id="location"></h2>
+		<img src="" id="icon">
+		<table>
+			<tr>
+				<th>속성</th>
+				<th>값</th>
+				<th>속성</th>
+				<th>값</th>
+				<th>속성</th>
+				<th>값</th>
+			</tr>
+			<tr>
+				<td>날씨</td>
+				<td id="weather"></td>
+				<td>일출시각</td>
+				<td id="sunrise"></td>
+				<td>일몰시각</td>
+				<td id="sunset"></td>
+			</tr>
+			<tr>
+				<td>습도</td>
+				<td id="humidity"></td>
+				<td>시계</td>
+				<td id="visibility"></td>
+				<td>구름량</td>
+				<td id="cloudness"></td>
+			</tr>
+			<tr>
+				<td>최저온도</td>
+				<td id="minTemp"></td>
+				<td>현재온도</td>
+				<td id="temp"></td>
+				<td>최고온도</td>
+				<td id="maxTemp"></td>
+			</tr>
+			<tr>
+				<td>기압</td>
+				<td id="press"></td>
+				<td>풍속</td>
+				<td id="speed"></td>
+				<td>풍향</td>
+				<td id="deg"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+	var timeout = document.getElementById("timeout");
+	var maximumAge = document.getElementById("maximumAge");
+	var enableHighAccuracy = document.getElementById("enableHighAccuracy");
+	var timestame = document.getElementById("timestamp");
+	var latitude = document.getElementById("latitude");
+	var longitude = document.getElementById("longitude");
+	var accuracy = document.getElementById("accuracy");
+	var errorMessage = document.getElementById("errorMessage");
+	var tds = document.querySelectorAll(".refresh");
+	var getLocationB = document.getElementById("getLocation");
+	var method = document.getElementById("method");
+	var geolocation = navigator.geolocation;
+
+	function success(position) {
+		var coords = position.coords;
+		var date = new Date(position.timestamp);
+		var data;
+		if (coords.accuracy > 100) {
+			data = [ "", "", "", "부정확한 자료(" + coords.accuracy + ")" ];
+		} else {
+			data = [ coords.latitude.toFixed(3), coords.longitude.toFixed(3),
+					coords.accuracy.toFixed(3), "" ];
+			data = [ 37.4, 127, coords.accuracy.toFixed(3), "" ];
+
+			getWeatherInfo(data[0], data[1]);
+		}
+		latitude.value = data[0];
+		longitude.value = data[1];
+		accuracy.value = data[2];
+		errorMessage.innerHTML = data[3];
+	}
+
+	function error(positionError) {
+		var msg;
+		switch (positionError.code) {
+		case 1:
+			msg = "사용자가 권한 부여를 거부하였습니다.";
+			break;
+		case 2:
+			msg = "내부 오류로 위치 정보를 가져오지 못하였습니다.";
+			break;
+		case 3:
+			msg = "Timeout 초과로 정보를 가져오지 못하였습니다.";
+		}
+		errorMessage.innerHTML = msg;
+	}
+
+	getLocationB.addEventListener("click", function() {
+		var options = {
+			enableHighAccuracy : enableHighAccuracy.checked,
+			timeout : timeout.value * 1000,
+			maximumAge : maximumAge.value * 1000
+		};
+		refreshFields();
+		geolocation.getCurrentPosition(success, error, options);
+	});
+	function refreshFields() {
+		errorMessage.innerHTML = "";
+		for (var i = 0; i < tds.length; i++) {
+			tds[i].value = "";
+		}
+	}
+
+	function getWeatherInfo(lat, lon) {
+		var key = "7040af01fd13965458abe3de2a9ed469";
+		var xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", function(e) {
+			printWeatherInfo(xhr.responseText);
+		});
+		var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat
+				+ "&lon=" + lon + "&APPID=" + key;
+		xhr.open("get", url, true);
+		xhr.send();
+	}
+
+	function printWeatherInfo(responseText) {
+		console.log(responseText);
+		var resObj = JSON.parse(responseText);
+		document.getElementById("location").innerHTML = resObj.name + ","
+				+ resObj.sys.country;
+		document.getElementById("icon").src = "http://openweathermap.org/img/w/"
+				+ resObj.weather[0].icon + ".png";
+		document.getElementById("weather").innerHTML = resObj.weather[0].main
+				+ "(" + resObj.weather[0].description + ")";
+		document.getElementById("deg").innerHTML = resObj.wind.deg + "°";
+		document.getElementById("speed").innerHTML = resObj.wind.speed + "m/s";
+		document.getElementById("visibility").innerHTML = resObj.visibility
+				+ "m";
+		document.getElementById("cloudness").innerHTML = resObj.clouds.all
+				+ "%";
+		document.getElementById("minTemp").innerHTML = (resObj.main.temp_min - 273.15)
+				.toFixed(1)
+				+ "°C";
+		document.getElementById("temp").innerHTML = (resObj.main.temp - 273.15)
+				.toFixed(1)
+				+ "°C";
+		document.getElementById("maxTemp").innerHTML = (resObj.main.temp_max - 273.15)
+				.toFixed(1)
+				+ "°C";
+		document.getElementById("press").innerHTML = resObj.main.pressure
+				+ "hpa";
+		document.getElementById("humidity").innerHTML = resObj.main.humidity
+				+ "%";
+		var date = new Date();
+
+		date.setTime(resObj.sys.sunrise * 1000);
+		document.getElementById("sunrise").innerHTML = date
+				.toLocaleTimeString();
+		date.setTime(resObj.sys.sunset * 1000);
+		document.getElementById("sunset").innerHTML = date.toLocaleTimeString();
+	}
+</script>
+</html>

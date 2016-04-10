@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>geolocation api</title>
+<style>
+input {
+	width: 80px;
+	margin-bottom: 10px;
+}
+
+tr:nth-child(2n) {
+	background: rgba(0, 255, 0, 0.2);
+}
+
+tr:nth-child(2n+1) {
+	background: rgba(0, 0, 255, 0.2);
+}
+
+.refresh {
+	width: 450px;
+}
+
+td:nth-child(2n+1) {
+	width: 150px;
+}
+</style>
+</head>
+<body>
+	<label for="timeout">타임아웃(초)</label>
+	<input type="number" min="0" id="timeout" value="2">
+	<label for="maximumAge">최대유효기간(초)</label>
+	<input type="number" min="0" id="maximumAge" value="0">
+	<label for="enableHighAccuracy">높은 정확도</label>
+	<input type="checkbox" id="enableHighAccuracy">
+	<br>
+	<button id="getLocation">현재 나의 위치</button>
+	<button id="traceLocation">위치 추적하기</button>
+	<button id="stopTrace">위치 추적 중지</button>
+	<label for="cnt">추적 회수 : </label>
+	<span id="cnt">0</span>
+	<hr>
+	<table>
+		<tr>
+			<th>속성</th>
+			<th>값</th>
+		</tr>
+		<tr>
+			<td>정보 획득 시각</td>
+			<td><input type="text" id="timestamp" class="refresh"></td>
+		</tr>
+		<tr>
+			<td>위도(°)</td>
+			<td><input type="text" id="latitude" class="refresh"></td>
+		</tr>
+		<tr>
+			<td>경도(°)</td>
+			<td><input type="text" id="longitude" class="refresh"></td>
+		</tr>
+		<tr>
+			<td>오차(m)</td>
+			<td><input type="text" id="accuracy" class="refresh"></td>
+		</tr>
+		<tr>
+			<td>에러메시지</td>
+			<td><input type="text" id="errorMessage" class="refresh"></td>
+		</tr>
+	</table>
+</body>
+<script>
+	var timeout = document.getElementById("timeout");
+	var maximumAge = document.getElementById("maximumAge");
+	var enableHighAccuracy = document.getElementById("enableHighAccuracy");
+	var timestame = document.getElementById("timestamp");
+	var latitude = document.getElementById("latitude");
+	var longitude = document.getElementById("longitude");
+	var accuracy = document.getElementById("accuracy");
+	var errorMessage = document.getElementById("errorMessage");
+	var tds = document.querySelectorAll(".refresh");
+	var getLocationB = document.getElementById("getLocation");
+	var traceLocationB = document.getElementById("traceLocation");
+	var stopTraceB = document.getElementById("stopTrace");
+	var cnt = document.getElementById("cnt");
+
+	var geolocation = navigator.geolocation;
+
+	function success(position) {
+		var coords = position.coords;
+		var date = new Date(position.timestamp);
+		timestame.value = date.toLocaleString();
+		latitude.value = coords.latitude;
+		longitude.value = coords.longitude;
+		accuracy.value = coords.accuracy;
+		errorMessage.value = "";
+		cnt.innerHTML = parseInt(cnt.innerHTML) + 1;
+	}
+
+
+	function error(positionError) {
+		var msg;
+		switch (positionError.code) {
+		case 1:
+			msg = "사용자가 권한 부여를 거부하였습니다.";
+			break;
+		case 2:
+			msg = "내부 오류로 위치 정보를 가져오지 못하였습니다.";
+			break;
+		case 3:
+			msg = "Timeout 초과로 정보를 가져오지 못하였습니다.";
+		}
+		errorMessage.value = msg;
+	}
+
+	getLocationB.addEventListener("click", function() {
+		var options = {
+			enableHighAccuracy : enableHighAccuracy.checked,
+			timeout : timeout.value * 1000,
+			maximumAge : maximumAge.value * 1000
+		};
+		refreshFields();
+		geolocation.getCurrentPosition(success, error, options);
+	});
+
+	var watchId;
+	traceLocationB.addEventListener("click", function() {
+		var options = {
+				enableHighAccuracy : enableHighAccuracy.checked,
+				timeout : timeout.value * 1000,
+				maximumAge : maximumAge.value * 1000
+			};
+			refreshFields();
+		watchId = geolocation.watchPosition(success, error, options);
+	});
+	stopTraceB.addEventListener("click", function() {
+		geolocation.cancelWatch(watchId);
+	});
+	
+	function refreshFields() {
+		cnt.innerHTML = 0;
+		for (var i = 0; i < tds.length; i++) {
+			tds[i].value = "";
+		}
+	}
+</script>
+</html>
