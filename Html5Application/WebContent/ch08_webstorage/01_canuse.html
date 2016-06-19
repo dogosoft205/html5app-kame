@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WebStorage 사용 가능 확인</title>
+</head>
+<body>
+
+</body>
+<script>
+	function checkWebStorageAvailable() {
+		try {
+			if (localStorage) {
+				localStorage.setItem("test", "test-value");
+				localStorage.removeItem("test");
+			} else {
+				return "브라우저에서 localStorage 지원하지 않음";
+			}
+		} catch (exception) {
+			return exception + " 발생으로 localStorage 사용 불가";
+		}
+	}
+
+	var msg = checkWebStorageAvailable();
+	if (msg) {
+		document.write(msg);
+	} else {
+		document.write("localStorage를 사용하는 작업 진행");
+	}
+</script>
+</html>

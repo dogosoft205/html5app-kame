@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+<script>
+	var openResult = indexedDB.open("hello");
+	openResult.addEventListener("success", function(){
+		console.log("콜백 내부 : "+openResult.result);
+	});
+
+	console.log("전역 레벨 : "+openResult.result);
+	
+</script>
+</html>

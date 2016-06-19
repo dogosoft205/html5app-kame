@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>데이터베이스 오픈</title>
+<style>
+label {
+	display: inline-block;
+	width: 70px;
+}
+</style>
+</head>
+<body>
+	<fieldset>
+		<legend>도서 정보</legend>
+		<label for="title">제목</label>
+		<input id="title" type="text">
+		<label for="isbn">ISBN</label>
+		<input id="isbn" type="text">
+		<br>
+		<label for="year">출판년도</label>
+		<input id="year" type="number">
+		<label for="category">분야</label>
+		<select id="category">
+			<option>문학
+			<option>경제
+			<option>기술
+			<option>시사
+		</select> <br>
+		<button id="registerB">등록</button>
+	</fieldset>
+	<fieldset id="control">
+		<label for="datas">자료 목록</label>
+		<select id="datas"></select>
+		<button id="searchB">조회</button>
+		<button id="delB">삭제</button>
+		<button id="getAllB">전체조회</button>
+	</fieldset>
+	<div id="dashboard"></div>
+</body>
+	<script>
+		var bookShelfDB;
+		function openDB(){
+			var openResult = window.indexedDB.open("bookShelf", 1);
+			openResult.addEventListener("success", function(){
+				console.log("데이터베이스 오픈 성공 : "+this.result);
+				bookShelfDB = this.result;
+			});			
+			openResult.addEventListener("error", function(){
+				console.log("데이터베이스 오픈 실패");
+			});			
+			openResult.addEventListener("upgradeneeded", function(){
+				console.log("데이터베이스 업그레이드 진행");
+			});			
+		}
+		openDB();
+
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

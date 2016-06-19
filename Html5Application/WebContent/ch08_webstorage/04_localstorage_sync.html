@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>localStorage 활용-JSON</title>
+</head>
+<body>
+	<fieldset>
+		<legend>로그인</legend>
+		<label for="name">사용자명</label>
+		<input type="text" id="name">
+		<button id="login">로그인</button>
+	</fieldset>
+	<fieldset>
+		<legend>개인화 설정</legend>
+		<label for="color">선호색상</label>
+		<input type="color" id="color">
+		<label for="fontSize">폰트크기</label>
+		<input type="number" id="fontSize">
+		<button id="save">설정</button>
+		<button id="remove">삭제</button>
+	</fieldset>
+</body>
+<script>
+	var storage = localStorage;
+
+	var body = document.querySelector("body");
+	var nameField = document.getElementById("name");
+	var colorField = document.getElementById("color");
+	var fontSizeField = document.getElementById("fontSize");
+
+	var defaultBackground = "#ffffff";
+	var defaultFontSize = 15;
+
+	document.getElementById("save").addEventListener("click", function() {
+		var user = {
+			name : nameField.value,
+			color : colorField.value,
+			size : fontSizeField.value
+		};
+		
+		storage.setItem(nameField.value, JSON.stringify(user));
+		updateUserInfo(nameField.value, colorField.value, fontSizeField.value);
+	});
+
+	document.getElementById("remove").addEventListener("click", function() {
+		storage.removeItem(nameField.value);
+		updateUserInfo("", defaultBackground, defaultFontSize);
+	});
+	
+	document.getElementById("login").addEventListener("click", function(){
+		var userStr = storage.getItem(nameField.value);
+		if(userStr){
+			var userObj = JSON.parse(userStr);
+			updateUserInfo(userObj.name, userObj.color, userObj.size);
+		}else{
+			updateUserInfo(nameField.value, defaultBackground, defaultFontSize);
+		}
+	});
+
+	function updateUserInfo(id, color, size) {
+		nameField.value = id;
+		colorField.value = color;
+		fontSizeField.value = size;
+		body.style.background = color;
+		body.style.fontSize = size + "px";
+	}
+	
+	window.addEventListener("storage", function(e){
+		if(e.key==nameField.value){
+			var userObj = JSON.parse(e.newValue);
+			updateUserInfo(userObj.name, userObj.color, userObj.size);
+		}
+	});
+	
+</script>
+</html>

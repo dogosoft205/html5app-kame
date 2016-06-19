@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>메모리 한계 상황</title>
+</head>
+<body>
+</body>
+<script>
+	var storage = localStorage;
+	try {
+		var index = 0;
+		while (true) {
+			storage.setItem(index++, index);
+		}
+	} catch (err) {
+		alert("에러 발생: 스토리지에 데이터를 저장 할 수 없습니다. " + err.message);
+	} finally {
+		storage.clear();
+	}
+</script>
+</html>
