@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>파일 정보 확인</title>
+</head>
+<body>
+	<h2>분석하려는 파일을 선택하세요.</h2>
+	<label for="file">파일선택</label>
+	<input type="file" id="file" multiple="multiple">
+	<h3>파일 정보</h3>
+	<div id="info"></div>
+</body>
+<script>
+	var info = document.getElementById("info");
+
+	document.getElementById("file").addEventListener("change", function() {
+		var html = "총 파일 개수 : " + this.files.length;
+		for (var i = 0; i < this.files.length; i++) {
+			var file = this.files[i];
+			html += "<p>파일 번호 : " + i + "<p><ul>";
+			html += "<li>파일명: " + file.name;
+			html += "<li>파일타입: " + file.type;
+			html += "<li>파일크기: " + file.size+"byte";
+			html += "</ul>"
+		}
+		info.innerHTML = html;
+	});
+</script>
+</html>
