@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>News Widget</title>
+</head>
+
+<script>
+	var request = document.getElementById("request");
+	var whiteList = [ "http://yoursite.com:8080", "http://localhost:8080" ];
+	window.addEventListener("message", function(e) {
+		if (whiteList.includes(e.origin)) {
+			var data = "";
+			for (var i = 1; i < 10; i++) {
+				data += e.data + " * " + i + " = " + (i * e.data)+"<br>";
+			}
+			this.top.postMessage(data, "*");
+		}
+	});
+</script>
+
+</html>

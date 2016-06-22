@@ -2,9 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>서버 시간 가져오기 - Level 1</title>
 </head>
 <body>
-
+	서버시간:
+	<span id="time"></span>
+	<br>
+	<button id="getTime">가져오기</button>
 </body>
+<script>
+	var timeArea = document.getElementById("time");
+	document.getElementById("getTime").addEventListener("click", function() {
+		var url = "../getTime";
+		var xhr = new XMLHttpRequest();
+		setInterval(function() {
+			xhr.open("GET", url, true);
+			xhr.addEventListener("readystatechange", function() {
+				if(xhr.readyState==0){
+					console.log("아직 open 전입니다.");
+				}else if(xhr.readyState==1){
+					console.log("xhr이 open 되었습니다.")
+				}else if(xhr.readyState==2){
+					console.log("header 정보가 수신되었습니다.")
+				}else if(xhr.readyState==3){
+					console.log("정보가 수신중입니다.");
+				}else if (xhr.status == 200 && xhr.readyState == 4) {
+					time.innerHTML = xhr.responseText;
+				}
+			});
+			xhr.send();
+		}, 1000 * 1);
+	});
+</script>
 </html>

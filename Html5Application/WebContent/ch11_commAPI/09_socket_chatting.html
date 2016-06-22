@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>소켓 체팅</title>
+<style type="text/css">
+input#chat {
+	width: 410px
+}
+
+#console-container {
+	width: 400px;
+}
+
+#console {
+	border: 1px solid #CCCCCC;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	height: 170px;
+	overflow-y: scroll;
+	padding: 5px;
+	width: 100%;
+}
+
+#console p {
+	padding: 0;
+	margin: 0;
+}
+</style>
+
+</head>
+<body>
+	<div>
+		<p>
+			<input type="text" placeholder="메시지를 입력하고 엔터를 누르세요." id="chat" />
+		</p>
+		<div id="console-container">
+			<ul id="msglist"></ul>
+		</div>
+	</div>
+</body>
+<script>
+	var ws;
+	var msglist = document.getElementById("msglist");
+	function initialize() {
+		var url = 'ws://localhost:8080/Html5Application/chat';
+		ws = new WebSocket(url);
+
+		ws.addEventListener("open", function(e) {
+			msglist.innerHTML = "<li>채팅 서버 연결</li>" + msglist.innerHTML;
+			ws.send("새로운 클라이언트 입장");
+		});
+		ws.addEventListener("message", function(e) {
+			msglist.innerHTML = "<li>" + e.data + "</li>" + msglist.innerHTML;
+		});
+	}
+
+	document.getElementById("chat").addEventListener("keydown",
+			function(event) {
+				if (event.keyCode == 13 && this.value) {
+					ws.send(this.value);
+					this.value = "";
+				}
+			});
+
+	initialize();
+</script>
+</html>

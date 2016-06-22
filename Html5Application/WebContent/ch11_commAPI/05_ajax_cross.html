@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>크로스 도메인 요청 지원</title>
+</head>
+<body>
+	<fieldset>
+		<legend>로그인</legend>
+		<form id="loginform">
+			<label for="id">ID</label>
+			<input type="text" id="mid" name="id" value="hong">
+			<label for="pass">PASS</label>
+			<input type="password" id="mpass" name="pass" value="1234">
+			<input type="submit" value="로그인">
+			<div id="message"></div>
+		</form>
+	</fieldset>
+</body>
+<script>
+	var message = document.getElementById("message");
+	document.getElementById("loginform").addEventListener("submit", function(e){
+		e.preventDefault();
+		
+		var xhr = new XMLHttpRequest();
+		var formData = new FormData(this);
+		//var url = "http://yoursite.com:8080/Html5Application/login";
+		var url = "http://yoursite.com:8080/Html5Application/logincors";
+		xhr.open("POST", url, true);
+		xhr.addEventListener("load", function(){
+			message.innerHTML = xhr.responseText;
+		});
+		xhr.send(formData);
+	});
+</script>
+</html>

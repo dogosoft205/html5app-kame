@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax Upload</title>
+<style>
+	#progress{display: none;}
+</style>
+</head>
+<body>
+	<form id="uploadForm">
+		<fieldset>
+			<legend>파일업로드</legend>
+			<label for="file">파일</label>
+			<input type="file" id="file" name="file">
+			<input type="hidden" id="fileName" name="fileName">
+			<input type="submit" value="upload">
+			<progress id="progress"></progress>
+			<div id="message"></div>
+		</fieldset>
+	</form>
+</body>
+<script>
+	var message = document.getElementById("message");
+	var fileName = document.getElementById("fileName");
+	var progress = document.getElementById("progress");
+	
+	document.getElementById("file").addEventListener("change", function(e) {
+		fileName.value = this.files[0].name;
+	});
+	document.getElementById("uploadForm").addEventListener("submit", function(e) {
+		e.preventDefault();
+		var xhr = new XMLHttpRequest();
+		var formData = new FormData(this);
+		var url = "../upload";
+		xhr.open("POST", url, true);
+		var xmlupload = xhr.upload;
+		xmlupload.addEventListener("loadstart", function(e) {
+			progress.style.display = "inline";
+		});
+		xmlupload.addEventListener("loadend", function(e) {
+			progress.style.display = "none";
+		});
+		xmlupload.addEventListener("progress", function(e) {
+			progress.max = e.total;
+			progress.value = e.loaded;
+		});
+		xhr.addEventListener("load", function(){
+			message.innerHTML = xhr.responseText;
+		});
+		xhr.send(formData);
+	});
+</script>
+</html>

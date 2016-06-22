@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>여기는 포털입니다.</title>
+<style>
+	#widget{display:none;}
+</style>
+</head>
+<body>
+	<h1>구구단을 외자</h1>
+	<label for="dan">단</label>
+	<input type="text" id="dan">
+	<button id="send">요청</button><hr>
+	<div id="display"></div>
+	<iframe id="widget"></iframe>
+</body>
+<script>
+	var dan = document.getElementById("dan");
+	var widget = document.getElementById("widget");
+	var trust = "http://yoursite.com:8080";
+	widget.src = trust+"/Html5Application/ch11_commAPI/07_messaging_widget.html";
+	document.getElementById("send").addEventListener("click", function() {
+		widget.contentWindow.postMessage(dan.value, trust);
+	});
+	
+	window.addEventListener("message", function(e){
+		if(e.origin==trust){
+			display.innerHTML = e.data;
+		}
+	});
+</script>
+</html>

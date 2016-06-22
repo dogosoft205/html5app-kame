@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Echo Client</title>
+</head>
+<body>
+	<button id="open">연결</button><br>
+	<label for="message">메시지</label><input type="text" id="message">
+	<button id="send">전송</button><br>
+	<button id="close">종료</button>
+	<ul id="output"></ul>
+</body>
+<script>
+
+	var output = document.getElementById("output");
+	var message = document.getElementById("message");
+	var socket;
+	
+	document.getElementById("open").addEventListener("click", function(){
+		var wsUri = "ws://localhost:8080/Html5Application/echo";
+		socket = new WebSocket(wsUri);
+		socket.addEventListener("open", function(){
+			output.innerHTML="<li>연결 성공: "+socket.url+output.innerHTML;
+		});
+		socket.addEventListener("message", function(e){
+			output.innerHTML="<li>message 수신: "+e.data+output.innerHTML;
+		});
+		socket.addEventListener("error", function(e){
+			output.innerHTML="<li>error 발생: "+e+output.innerHTML;
+		});
+	});
+	document.getElementById("send").addEventListener("click", function(){
+		output.innerHTML="<li>data 전송: "+message.value+output.innerHTML;
+		socket.send(message.value); 
+	});
+	document.getElementById("close").addEventListener("click", function(){
+		output.innerHTML="<li>연결 종료: "+socket.bufferedAmount+output.innerHTML;
+		socket.close();
+	});
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>서버 시간 가져오기 - Level 2</title>
+</head>
+<body>
+	서버시간: <span id="time"></span><br>
+	<button id="getTime">가져오기</button>
+</body>
+<script>
+	var timeArea = document.getElementById("time");
+	document.getElementById("getTime").addEventListener("click", function() {
+		var url = "../getTime";
+		var xhr = new XMLHttpRequest();
+		setInterval(function() {
+			xhr.open("GET", url, true);
+			xhr.addEventListener("load", function() {
+				time.innerHTML = xhr.responseText;
+			});
+			xhr.addEventListener("loadstart", function(){
+				console.log("로드 시작");
+			});
+			xhr.addEventListener("progress", function(){
+				console.log("로드 중...")
+			});
+			xhr.addEventListener("loadend", function(){
+				console.log("로드 종료")
+			});
+			xhr.send();
+		}, 1000 * 1);
+	});
+</script>
+</html>
