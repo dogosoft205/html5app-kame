@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple Worker</title>
+</head>
+<body>
+	<label for="loop">반복문 동작 회수</label>
+	<input type="number" id="loop">
+	<button id="doLoop">반복</button>
+	<div id="loopResult"></div>
+	<hr>
+	<label for="square">제곱 구하기</label>
+	<input type="number" id="square">
+	<button id="getSquare">제곱</button>
+	<div id="squareResult"></div>
+</body>
+<script>
+	var loop = document.getElementById("loop");
+	var square = document.getElementById("square");
+	
+	var doloop = document.getElementById("doLoop");
+	var getSquare = document.getElementById("getSquare");
+	
+	var loopResult = document.getElementById("loopResult");
+	var squareResult = document.getElementById("squareResult");
+	
+	doloop.addEventListener("click", function() {
+		this.disabled = true;
+		var worker = new Worker("02_solution_worker.js");
+		worker.addEventListener("message", function(e) {
+			loopResult.innerHTML = e.data;
+			doloop.disabled = false;
+		});
+		worker.postMessage(loop.value);
+	});
+	getSquare.addEventListener("click", function() {
+		squareResult.innerHTML = Math.pow(square.value, 2);
+	});
+</script>
+</html>

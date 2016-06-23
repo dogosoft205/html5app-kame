@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>공유 워커</title>
+</head>
+<body>
+	<label for="name">끝말잇기: </label>
+	<input type="text" id="name" name="name">
+	<button id="click">클릭</button>
+	<div id="result"></div>
+</body>
+<script>
+	var result = document.getElementById("result");
+	var worker;
+	function init() {
+		worker = new SharedWorker("06_shared_worker.js");
+		worker.addEventListener("error", function(e) {
+			console.log("공유 워커 오류 발생 - " + e);
+		});
+
+		worker.port.addEventListener("message", function(e) {
+			result.innerHTML+=e.data
+		});
+
+		worker.port.start();
+
+		document.getElementById("click").addEventListener("click", function() {
+			worker.port.postMessage(document.getElementById("name").value+" > ");
+		});
+	}
+	init();
+</script>
+</html>

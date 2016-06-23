@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>스크립트 재사용</title>
+</head>
+<body>
+<p>워커 제어</p>
+<button id="create">create</button>
+<button id="work">work</button>
+<button id="terminate">terminate</button>
+<button id="close">close</button>
+
+<ul id="result"></ul>
+</body>
+<script>
+	var result = document.getElementById("result");
+	var create = document.getElementById("create");
+	var work = document.getElementById("work");
+	var terminate = document.getElementById("terminate");
+	var close = document.getElementById("close");
+	
+	var worker;
+	create.addEventListener("click", function(){
+		worker = new Worker("05_import_worker_import.js");
+		worker.addEventListener("message", function(e){
+			updateResult("메시지 수신 "+e.data);
+		});
+		updateResult("worker 시작");
+	});
+	work.addEventListener("click", function(){
+		worker.postMessage("do work");
+	});
+	terminate.addEventListener("click", function(){
+		worker.terminate();
+	});
+	close.addEventListener("click", function(){
+		worker.postMessage("close");
+	});
+	function updateResult(newMessage){
+		result.innerHTML = "<li>"+newMessage+result.innerHTML;
+	}
+</script>
+</html>

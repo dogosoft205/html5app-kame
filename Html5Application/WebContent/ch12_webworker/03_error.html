@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>오류 처리</title>
+</head>
+<body>
+<p>오류 처리</p>
+<div id="result"></div>
+</body>
+<script>
+	var result = document.getElementById("result");
+	
+	var worker;
+	
+	function init(){
+		worker = new Worker("03_error_worker.js");
+		worker.addEventListener("error", function(e){
+			var data = "";
+			data+="에러: "+e.message+"<br>";
+			data+="파일: "+e.filename+"<br>";
+			data+="라인: "+e.lineno;
+			result.innerHTML = data;
+		});
+		worker.postMessage("hello");
+	}
+	
+	init();
+</script>
+</html>

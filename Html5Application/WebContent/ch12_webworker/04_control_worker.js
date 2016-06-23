@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+var db = indexedDB;
+addEventListener("message", function(e) {
+	if (e.data == "close") {
+		closeWorker();
+	} else {
+		heavyTask();
+	}
+});
+
+function heavyTask() {
+	postMessage("indexed DB를 이용한 작업 중." + db.toString());
+	for(var i=0; i<12345678901; i++){
+		// do long task
+	}
+	postMessage("indexed DB를 이용한 작업 종료");
+}
+
+function closeWorker() {
+	postMessage("indexed DB 작업 정리");
+	close();
+}
