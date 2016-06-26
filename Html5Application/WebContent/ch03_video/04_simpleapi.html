@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>HTML5의 Video</title>
+<style>
+	body{
+		text-align: center;
+	}
+</style>
 </head>
 <body>
     <video id="media" controls width="640" height="360">
@@ -26,5 +31,12 @@
     media.addEventListener("timeupdate", function(){
         info.innerHTML = "상태:"+media.currentTime+"/"+media.duration;
     });
+    
+    function printStatus(){
+    	console.log("네트워크 상태: "+media.networkState);
+    	console.log("준비 상태: "+media.readyState);
+    	console.log("음량: "+media.volume);
+    	
+    }
 </script>
 </html>

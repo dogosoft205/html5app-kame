@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+body {
+	text-align: center;
+}
+
+#container {
+	width: 640px;
+	margin: 20px auto;
+	padding: 5px;
+	background: #999999;
+	position: relative;
+}
+
+#controller {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: orange;
+	align-items: center;
+	display: none;
+}
+
+#seek {
+	width: 100%;
+}
+
+#video {
+	width: 100%;
+	height: 100%;
+}
+
+#volume {
+	width: 100px;
+}
+
+button {
+	height: 22px;
+	width: 140px;
+}

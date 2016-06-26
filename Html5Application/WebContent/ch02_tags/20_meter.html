@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>meter</title>
+<style>
+	label{
+		display:inline-block;
+		width:150px;
+	}
+	meter{
+		width:200px;
+	}
+</style>
+</head>
+<body>
+	<label>value &lt; 하한</label>
+	<meter max="100" low="30" optimum="60" high="90" value="10"></meter>
+	<br>
+	<label>하한&lt;=value &lt;적정</label>
+	<meter max="100" low="30" optimum="60" high="90" value="50"></meter>
+	<br>
+	<label>적정 &lt;=value &lt;상한</label>
+	<meter max="100" low="30" optimum="60" high="90" value="70"></meter>
+	<br>
+	<label>상한&lt;=value</label>
+	<meter max="100" low="30" optimum="60" high="90" value="95"></meter>
+</body>
+</html>

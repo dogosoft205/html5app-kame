@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>progress</title>
+<style>
+</style>
+</head>
+<body>
+	<p>다운로드 중</p>
+	<progress max="100" id="progress"></progress>
+</body>
+<script>
+	var progress = document.getElementById("progress");
+	var current = 0;
+	var intervalId = setInterval(updateProgress, 100);
+	
+	function updateProgress(){
+		progress.value = current++;
+		progress.innerHTML = current+"%"
+		if(current==100){
+			clearInterval(intervalId);
+		}
+	}
+</script>
+</html>
