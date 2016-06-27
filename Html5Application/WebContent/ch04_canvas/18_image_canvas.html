@@ -15,14 +15,19 @@ canvas {
 </style>
 </head>
 <body>
-	<canvas id="canvas1" width="150" height="150"></canvas>
-	<div>,</div>
-	<canvas id="canvas2" width="150" height="150"></canvas>
+	<figure>
+		<canvas id="canvas1" width="150" height="150"></canvas>
+		<figcaption>원본 캔버스</figcaption>
+	</figure>
+	<figure>
+		<canvas id="canvas2" width="150" height="150"></canvas>
+		<figcaption>대상 캔버스</figcaption>
+	</figure>
 </body>
 <script>
-	var canvas1 = document.querySelector("#canvas1");
+	var canvas1 = document.getElementById("canvas1");
 	var ctx1 = canvas1.getContext("2d");
-	var canvas2 = document.querySelector("#canvas2");
+	var canvas2 = document.getElementById("canvas2");
 	var ctx2 = canvas2.getContext("2d");
 
 	function drawAndCopy() {

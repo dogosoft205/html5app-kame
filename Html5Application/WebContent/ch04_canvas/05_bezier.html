@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Path 활용</title>
+<title>Path 활용을 이용한 베지에 곡선</title>
 <style>
 #canvas {
 	border: solid blue thin;
@@ -13,7 +13,7 @@
 	<canvas id="canvas" width="450" height="150"></canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	function drawSimple() {
 		ctx.beginPath();
@@ -28,7 +28,7 @@
 		ctx.moveTo(20, 130);
 		ctx.quadraticCurveTo(100, 25, 180, 130);
 		ctx.stroke();
-		
+
 		ctx.beginPath();
 		ctx.strokeStyle = "rgb(0, 255, 0)";
 		ctx.moveTo(200, 130);
@@ -36,12 +36,12 @@
 		ctx.lineTo(300, 10);
 		ctx.lineTo(400, 130);
 		ctx.stroke();
-		
+
 		ctx.beginPath();
 		ctx.strokeStyle = "rgb(255, 0, 0)";
 
 		ctx.moveTo(200, 130);
-		ctx.bezierCurveTo(250,10,300,10,400,130);
+		ctx.bezierCurveTo(250, 10, 300, 10, 400, 130);
 		ctx.stroke();
 	}
 

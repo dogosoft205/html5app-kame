@@ -13,12 +13,13 @@
 	<canvas id="canvas" width="450" height="150"></canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 
 	function draw() {
 		var img = new Image();
 		img.src = "../images/Canvas_createpattern.png";
+		console.log(img);
 		img.addEventListener("load", function() {
 			var pattern = ctx.createPattern(this, "repeat");
 			ctx.fillStyle = pattern;

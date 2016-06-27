@@ -4,31 +4,37 @@
 <meta charset="UTF-8">
 <title>이미지</title>
 <style>
-body{
-	display:flex;
-	align-items:center;
+body {
+	display: flex;
+	align-items: center;
 }
-#source{
+
+#source {
 	width: 320px;
 	height: 213px;
 }
+
 #canvas {
 	border: solid blue thin;
 }
 </style>
 </head>
 <body>
-	<img id="source" src="../images/Canvas_sample.png">
-	<div>>></div>
-	<canvas id="canvas" width="320" height="213"></canvas>
+	<figure>
+		<img id="source" src="../images/Canvas_sample.png">
+		<figcaption>이미지 소스</figcaption>
+	</figure>
+	<figure>
+		<canvas id="canvas" width="320" height="213"></canvas>
+		<figcaption>캔버스</figcaption>
+	</figure>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
-	var imageSource = document.querySelector("#source");
-	imageSource.addEventListener("load", function(){
+	var imageSource = document.getElementById("source");
+	imageSource.addEventListener("load", function() {
 		ctx.drawImage(this, 0, 0);
 	});
-	
 </script>
 </html>

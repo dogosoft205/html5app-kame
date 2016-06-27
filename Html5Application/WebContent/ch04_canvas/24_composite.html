@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이미지</title>
+<title>합성</title>
 <style>
 body {
-	
+	display: flex;
+	align-items: center;
 }
 
 #canvas {
@@ -15,7 +16,7 @@ body {
 </head>
 <body>
 	<canvas id="canvas" width="150" height="150"></canvas>
-	<br>
+	globalCompositeOperation :
 	<select id="compositeValue">
 		<option>source-over
 		<option>source-in
@@ -33,9 +34,9 @@ body {
 </body>
 <script>
 	function draw() {
-		var canvas = document.querySelector("#canvas");
+		var canvas = document.getElementById("canvas");
 		var ctx = canvas.getContext("2d");
-		var type =  document.querySelector("#compositeValue").value;
+		var type =  document.getElementById("compositeValue").value;
 		ctx.clearRect(0, 0, 150, 150);
 		ctx.globalCompositeOperation = "source-over";
 
@@ -47,6 +48,6 @@ body {
 		ctx.fillRect(25, 25, 100, 100);
 	}
 
-	document.querySelector("#btnDraw").addEventListener("click", draw);
+	document.getElementById("btnDraw").addEventListener("click", draw);
 </script>
 </html>

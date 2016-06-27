@@ -13,14 +13,14 @@
 	<canvas id="canvas" width="450" height="150"></canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	function drawStrokeRect() {
-		ctx.shadowOffsetX = 2;
-		ctx.shadowOffsetY = 2;
-		ctx.shadowBlur = 2;
-		ctx.shadowColor = "rgba(255, 0, 0, 0.5)";
-		ctx.strokeRect(20, 20, 410, 110);
+		ctx.shadowOffsetX = 10;
+		ctx.shadowOffsetY = 10;
+		ctx.shadowBlur = 10;
+		ctx.shadowColor = "rgba(255, 0, 0, 1)";
+		ctx.fillRect(20, 20, 410, 110);
 	}
 
 	drawStrokeRect();

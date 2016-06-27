@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>다양한 line의 속성</title>
+<title>lineWidth 속성</title>
 <style>
 #canvas {
 	border: solid blue thin;
@@ -15,17 +15,16 @@
     </canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
-	function drawLine(){
-		for(var i=0; i<10; i++){
+	function drawLine() {
+		for (var i = 0; i < 10; i++) {
 			ctx.beginPath();
-			ctx.lineWidth = 1+i;
-			ctx.moveTo(5, 5+15*i);
-			ctx.lineTo(145, 5+15*i);
+			ctx.lineWidth = 1 + i;
+			ctx.moveTo(5, 5 + 15 * i);
+			ctx.lineTo(145, 5 + 15 * i);
 			ctx.stroke();
-		}		
-
+		}
 	}
 	drawLine();
 </script>

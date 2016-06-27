@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이미지</title>
+<title>변형 1</title>
 <style>
 body {
 	display: flex;
@@ -18,23 +18,23 @@ body {
 	<canvas id="canvas" width="450" height="150"></canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	function draw() {
-		ctx.font ="2em 고딕";
-		ctx.fillText("Trans", 10, 50);
+		ctx.font = "2em 고딕";
+		ctx.fillText("Trans", 10, 50);	// 상태 1
 		ctx.save();
-		
+
 		ctx.translate(0, 80);
-		ctx.fillText("원점이동", 10, 50);
-		
-		ctx.restore();
+		ctx.fillText("원점이동", 10, 50);	// 상태 2
+
+		ctx.restore();	// 상태 1	
 		ctx.save();
 		ctx.translate(200, 0);
-		ctx.rotate(Math.PI /180 * 15);
-		ctx.fillText("회전", 10, 50);
-		
-		ctx.restore();
+		ctx.rotate(Math.PI / 180 * 15);
+		ctx.fillText("회전", 10, 50); // 상태 3
+
+		ctx.restore();	// 상태 1
 		ctx.translate(200, 80);
 		ctx.scale(2, 1);
 		ctx.fillText("확대", 10, 50);

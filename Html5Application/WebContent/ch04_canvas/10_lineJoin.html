@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>다양한 line의 속성</title>
+<title>lineJoin 속성</title>
 <style>
 #canvas {
 	border: solid blue thin;
@@ -16,7 +16,7 @@
 </body>
 <script>
 	var join = [ "round", "bevel", "miter" ];
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	function drawLine() {
 		ctx.lineWidth = 20;

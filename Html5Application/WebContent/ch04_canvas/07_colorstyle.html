@@ -15,24 +15,27 @@
     </canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	var rect_width = 15;
-	
+
 	function drawFillRect() {
 		for (var i = 0; i < 10; i++) {
 			for (var j = 0; j < 10; j++) {
-				ctx.fillStyle =  'rgba(' + Math.floor(255 - 25.5 * i) + ','+ Math.floor(255 - 25.5 * j) + ',0,'+i/10.0+')';
-				ctx.fillRect(j * rect_width, i * rect_width, rect_width, rect_width);
+				ctx.fillStyle = 'rgba(' + Math.floor(255 - 25.5 * i) + ','
+						+ Math.floor(255 - 25.5 * j) + ',0,' + i / 10.0 + ')';
+				ctx.fillRect(j * rect_width, i * rect_width, rect_width,
+						rect_width);
 			}
 		}
 	}
 	function drawStrokeRect() {
 		for (var i = 0; i < 10; i++) {
 			for (var j = 0; j < 10; j++) {
-				ctx.strokeStyle = 'rgb(' + Math.floor(255 - 25.5 * i) + ','+ Math.floor(255 - 25.5 * j) + ',0)';
-				ctx.strokeRect(300+ j * rect_width, i * rect_width, rect_width,
-						rect_width);
+				ctx.strokeStyle = 'rgb(' + Math.floor(255 - 25.5 * i) + ','
+						+ Math.floor(255 - 25.5 * j) + ',0)';
+				ctx.strokeRect(300 + j * rect_width, i * rect_width,
+						rect_width, rect_width);
 			}
 		}
 	}

@@ -6,21 +6,24 @@
 <style>
 #canvas {
 	border: solid blue thin;
+	/* 	width:150px;
+	height:150px; */
 }
 </style>
 </head>
 <body>
 	<canvas id="canvas" width="150" height="150">
+	<!-- <canvas id="canvas"> -->
         당신의 브라우저는 canvas를 지원하지 않습니다.
     </canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
-	function drawRect(){
+	function drawRect() {
 		ctx.fillRect(25, 25, 100, 100);
 		ctx.clearRect(45, 45, 60, 60);
-		ctx.strokeRect(50, 50, 50, 50);		
+		ctx.strokeRect(50, 50, 50, 50);
 	}
 	drawRect();
 </script>

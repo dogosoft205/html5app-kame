@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Path 활용</title>
+<title>Path를 활용한 사각형</title>
 <style>
 #canvas {
 	border: solid blue thin;
@@ -13,7 +13,7 @@
 	<canvas id="canvas" width="450" height="150"></canvas>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
+	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	function drawStrokeRect(){
 		ctx.beginPath();
@@ -27,7 +27,6 @@
 	
 	function drawFillRect() {
 		ctx.beginPath();
-
 		ctx.moveTo(160, 10);
 		ctx.lineTo(260, 10);
 		ctx.lineTo(260, 110);

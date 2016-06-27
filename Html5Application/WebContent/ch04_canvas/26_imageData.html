@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이미지</title>
+<title>ImageData</title>
 <style>
 #source {
 	width: 320px;
@@ -23,10 +23,10 @@
 	</div>
 </body>
 <script>
-	var canvas = document.querySelector("#canvas");
-	var bGrayScale = document.querySelector("#grayScale");
-	var bInvert = document.querySelector("#invert");
-	var colorPicker = document.querySelector("#colorPicker");
+	var canvas = document.getElementById("canvas");
+	var bGrayScale = document.getElementById("grayScale");
+	var bInvert = document.getElementById("invert");
+	var colorPicker = document.getElementById("colorPicker");
 	
 	var ctx = canvas.getContext("2d");
 	var img = new Image();
