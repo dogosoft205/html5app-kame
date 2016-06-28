@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>form API</title>
+<title>checkValidity() 활용</title>
 <style>
 #msg {
 	width: 200px;
@@ -23,9 +23,9 @@
 	<div id="msg"></div>
 </body>
 <script>
-	var validationMsgForm = document.querySelector("#msg");
-	var form = document.querySelector("#info");
-	var sendB = document.querySelector("#send");
+	var validationMsgForm = document.getElementById("msg");
+	var form = document.getElementById("info");
+	var sendB = document.getElementById("send");
 	sendB.addEventListener("click", function() {
 		var isValid = form.checkValidity();
 		if (isValid) {

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>form API</title>
+<title>사용자 정의 validation 처리</title>
 </head>
 <body>
 	<form id="myform" action="#">
@@ -14,8 +14,8 @@
 	</form>
 </body>
 <script>
-	var pass1 = document.querySelector("#pass1");
-	var pass2 = document.querySelector("#pass2");
+	var pass1 = document.getElementById("pass1");
+	var pass2 = document.getElementById("pass2");
 	
 	pass2.addEventListener("input", function(){
 		if(pass1.value!=this.value){

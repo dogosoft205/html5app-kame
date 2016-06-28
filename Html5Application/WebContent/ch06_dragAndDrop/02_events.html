@@ -29,17 +29,29 @@
 			<span id="cnt">9</span>개의 음식이 준비되어있습니다.
 		</div>
 		<div class="dropTarget" id="total">
-			<img src="../images/banana.png" class="menuItem" id="banana" data-type="dessert">
-			<img src="../images/beer.png" class="menuItem" id="beer" data-type="drink">
-			<img src="../images/cherry.png" class="menuItem" id="cherry" data-type="dessert">
-			<img src="../images/coffee.png" class="menuItem" id="coffee" data-type="drink">
-			<img src="../images/juice.png" class="menuItem" id="juice" data-type="drink">
-			<img src="../images/noodle.png" class="menuItem" id="noodle" data-type="meal">
-			<img src="../images/orange.png" class="menuItem" id="orange" data-type="dessert">
-			<img src="../images/rice.png" class="menuItem" id="rice" data-type="meal">
-			<img src="../images/bread.png" class="menuItem" id="bread" data-type="meal">
+			<img src="../images/banana.png" class="menuItem" id="banana"
+				data-type="dessert">
+			<img src="../images/beer.png" class="menuItem" id="beer"
+				data-type="drink">
+			<img src="../images/cherry.png" class="menuItem" id="cherry"
+				data-type="dessert">
+			<img src="../images/coffee.png" class="menuItem" id="coffee"
+				data-type="drink">
+			<img src="../images/juice.png" class="menuItem" id="juice"
+				data-type="drink">
+			<img src="../images/noodle.png" class="menuItem" id="noodle"
+				data-type="meal">
+			<img src="../images/orange.png" class="menuItem" id="orange"
+				data-type="dessert">
+			<img src="../images/rice.png" class="menuItem" id="rice"
+				data-type="meal">
+			<img src="../images/bread.png" class="menuItem" id="bread"
+				data-type="meal">
 		</div>
-		밥먹다 JavaScript가 궁금하다면 : <a href="https://developer.mozilla.org" id="mdn">MDN</a>
+		<p>
+			밥먹다 JavaScript가 궁금하다면 : <a href="https://developer.mozilla.org"
+				id="mdn">MDN</a>
+		</p>
 	</div>
 
 	<div id="myMenu">
@@ -57,37 +69,5 @@
 		</div>
 	</div>
 </body>
-<script>
-	var lis = document.querySelectorAll(".menuItem");
-	var targets = document.querySelectorAll(".dropTarget");
-
-	for (var i = 0; i < lis.length; i++) {
-		lis[i].addEventListener("dragstart", function() {
-			console.log("drag start event");
-		});
-		lis[i].addEventListener("drag", function() {
-			console.log("drag  event");
-		});
-		lis[i].addEventListener("dragend", function() {
-			console.log("drag end  event");
-		});
-	}
-
-	for (var i = 0; i < targets.length; i++) {
-		targets[i].addEventListener("dragenter", function(e) {
-			console.log("drag enter event");
-		});
-		targets[i].addEventListener("dragleave", function() {
-			console.log("drag leave event");
-		});
-		targets[i].addEventListener("dragover", function(e) {
-			e.preventDefault();
-			console.log("drag over event");
-		});
-		targets[i].addEventListener("drop", function(e) {
-			e.preventDefault();
-			console.log("drop event");
-		});
-	}
-</script>
+<script src="02_events.js"></script>
 </html>

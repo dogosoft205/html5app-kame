@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>form API</title>
+<title>실시간 오류 표시</title>
 <style>
 #msg {
 	width: 200px;
@@ -16,18 +16,16 @@
 </head>
 <body>
 	<form action="#" id="info">
-		<label for="name">이름</label>
-		<input type="text" name="name" id="name" pattern="[가-힣]{2,5}">
-		<label for="email">email</label>
-		<input type="email" name="myemail" id="myemail">
+		<label for="speed">속도설정</label>
+		<input type="number" name="speed" id="speed" min="60" max="120" >
 		<input type="button" id="send" value="전송">
 	</form>
 	<div id="msg"></div>
 </body>
 <script>
-	var validationMsgForm = document.querySelector("#msg");
-	var form = document.querySelector("#info");
-	var sendB = document.querySelector("#send");
+	var validationMsgForm = document.getElementById("msg");
+	var form = document.getElementById("info");
+	var sendB = document.getElementById("send");
 	sendB.addEventListener("click", function() {
 		var isValid = form.checkValidity();
 		if (isValid) {
@@ -37,17 +35,13 @@
 	form.addEventListener("invalid", function(e) {
 		var src = e.target;
 		var msg;
-		for(var i in src.validity){
-			console.log(i+" : "+src.validity[i]);
-		}
-		if (src.type == "text" && src.validity.patternMismatch) {
-			msg = "양식을 확인하세요. 한글 2~5자 입력";
-		} else if (src.type == "email" && src.validity.typeMismatch) {
-			msg = "양식을 확인하세요. abc@def.net";
+		if (src.type == "number" && src.validity.rangeUnderflow) {
+			msg = "최소값 이하입니다. 하한: "+src.min;
+		} else if (src.type == "number" && src.validity.rangeOverflow) {
+			msg = "최대값 이상입니다. 상한: "+src.max;
 		} else{
 			msg = src.validationMessage;
 		}
-		console.log(src.type+" : "+msg);
 		showValidationMessage(msg, src);
 	}, true);
 	

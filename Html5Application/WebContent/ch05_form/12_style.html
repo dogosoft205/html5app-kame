@@ -30,9 +30,9 @@ input:invalid {
 	<div id="msg"></div>
 </body>
 <script>
-	var validationMsgForm = document.querySelector("#msg");
-	var form = document.querySelector("#info");
-	var sendB = document.querySelector("#send");
+	var validationMsgForm = document.getElementById("msg");
+	var form = document.getElementById("info");
+	var sendB = document.getElementById("send");
 	sendB.addEventListener("click", function() {
 		var isValid = form.checkValidity();
 		if (isValid) {
@@ -44,8 +44,8 @@ input:invalid {
 		var msg;
 		if (src.type == "text" && src.validity.patternMismatch) {
 			msg = "양식을 확인하세요. 한글 2~5자 입력";
-		} else if (src.type == "text" && src.validity.patternMismatch) {
-			msg = "양식을 확인하세요. 한글 2~5자 입력";
+		} else if (src.type == "email") {
+			msg = "이메일 양식을 확인하세요.";
 		}
 		showValidationMessage(msg, src);
 	}, true);

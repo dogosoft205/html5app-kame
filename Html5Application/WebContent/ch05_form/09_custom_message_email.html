@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>form API</title>
@@ -23,8 +23,8 @@
 	<div id="msg"></div>
 </body>
 <script>
-	var validationMsgForm = document.querySelector("#msg");
-	var form = document.querySelector("#info");
+	var validationMsgForm = document.getElementById("msg");
+	var form = document.getElementById("info");
 	form.addEventListener("invalid", function(e) {
 		e.preventDefault();
 		var src = e.target;
