@@ -20,99 +20,29 @@ label {
 		<button id="getAllB">전체조회</button>
 		<button id="getByIsbnRangeB">ISBN범위 조회</button>
 		(
-		<input type="number" id="lowerISBN" placeholder="최소" class="smallInput">
+		<input type="number" id="lowerISBN" placeholder="최소"
+			class="smallInput">
 		~
-		<input type="number" id="upperISBN" placeholder="최대" class="smallInput">
+		<input type="number" id="upperISBN" placeholder="최대"
+			class="smallInput">
+		)<br>
+		<button id="titleIdxB">타이틀인덱스</button>
+		<input type="text" id="startChar" placeholder="시작" class="smallInput">
+		부터
+		<input type="text" id="endChar" placeholder="종료" class="smallInput">
+		까지의 제목 <br>
+		<button id="yearIdxB">출판년도인덱스</button>
+		<input type="text" id="fromYear" placeholder="년도" class="smallInput">
+		부터
+		<input type="text" id="toYear" placeholder="년도" class="smallInput">
+		까지 출판된 도서 (정렬:
+		<input type="radio" id="next" name="orderBy" checked="checked">
+		<label for="next">오름차순</label>
+		<input type="radio" id="prev" name="orderBy">
+		<label for="prev">내림차순</label>
 		)
 	</fieldset>
 	<div id="dashboard"></div>
 </body>
-<script>
-	var dashboard = document.getElementById("dashboard");
-	var bookShelfDB;
-	function openDB() {
-		indexedDB.deleteDatabase("bookShelf");
-		var openResult = window.indexedDB.open("bookShelf", 1);
-		openResult.addEventListener("success", function() {
-			bookShelfDB = this.result;
-			initData();
-		});
-		openResult.addEventListener("upgradeneeded", function() {
-			bookShelfDB = this.result;
-			if(bookShelfDB.objectStoreNames.contains("books")){
-				bookShelfDB.deleteObjectStore("books");
-			}
-			var objStore = bookShelfDB.createObjectStore("books", {keyPath:"isbn", autoIncrement:true});
-		});
-	}
-	openDB();
-	
-	function initData(){
-		var tx = bookShelfDB.transaction(["books"], "readwrite");
-		
-		var objStore = tx.objectStore("books");
-		objStore.put({title:"HTML5", year:2016, category:"기술"});
-		objStore.put({title:"CSS35", year:2015, category:"기술"});
-		objStore.put({title:"JavaScript", year:2014, category:"기술"});
-		objStore.put({title:"Java", year:2013, category:"기술"});
-		objStore.put({title:"Servlet/JSP", year:2012, category:"기술"});
-		objStore.put({title:"JQuery", year:2011, category:"기술"});
-		objStore.put({title:"SQL", year:2010, category:"기술"});
-		objStore.put({title:"Spring", year:2009, category:"기술"});
-		objStore.put({title:"MyBatis", year:2008, category:"기술"});
-		objStore.put({title:"XML", year:2007, category:"기술"});
-	}
-	
-	document.getElementById("getAllB").addEventListener("click", function(){
-		dashboard.innerHTML = "";
-		var tx = bookShelfDB.transaction(["books"], "readonly");
-
-		var objStore = tx.objectStore("books");
-		var request = objStore.getAll();
-		request.addEventListener("success", function(){
-			dashboard.innerHTML = "";
-			for(var i=0; i<request.result.length; i++){
-				dashboard.innerHTML+=JSON.stringify(request.result[i])+"<br>";
-			}
-		});
-	});
-	
-	var lowerIsbn = document.getElementById("lowerISBN");
-	var upperIsbn = document.getElementById("upperISBN");
-	
-	document.getElementById("getByIsbnRangeB").addEventListener("click", function(){
-		var keyRange;
-		var lowerValue = Number.parseInt(lowerIsbn.value);
-		var upperValue = Number.parseInt(upperIsbn.value);
-		
-		if(!(lowerValue||upperValue)){
-			dashboard.innerHTML = "최소값과 최대값이 필요합니다.";
-			return;
-		}else{
-			keyRange = IDBKeyRange.bound(lowerValue, upperValue, false, false);
-		}
-		var tx = bookShelfDB.transaction(["books"], "readonly");
-
-		var objStore = tx.objectStore("books");
-		var request = objStore.getAll(keyRange);
-		request.addEventListener("success", function(){
-			dashboard.innerHTML = "";
-			for(var i=0; i<request.result.length; i++){
-				dashboard.innerHTML+=JSON.stringify(request.result[i])+"<br>";
-			}
-		});
-	});
-</script>
+<script src="09_bookshelf_keyrange.js"></script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
